@@ -80,6 +80,8 @@ public final class MeltyLinkClient {
         if (server != null && !server.isPublished() && joining == null && mc.player.tickCount > 40 && !hostAnnounced && !autoHostDone) {
             autoHostDone = true;
             int port = HttpUtil.getAvailablePort();
+            // development only: two offline test clients on one machine can't sign in to each other
+            if (Boolean.getBoolean("scrapsky.dev.offline")) server.setUsesAuthentication(false);
             boolean ok = server.publishServer(server.getDefaultGameType(), false, port);
             ScrapSky.LOG.info("Opened the world to others on port {}: {}", port, ok);
             if (ok && !net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("e4mc")) {

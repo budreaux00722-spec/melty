@@ -6,7 +6,14 @@ import dev.scrapsky.block.PartBlock;
 import dev.scrapsky.gen.SheetData;
 import dev.scrapsky.ship.ShipAssembler;
 import dev.scrapsky.ship.ShipEntity;
-import net.fabricmc.fabric.api.entity.FakePlayer;
+import com.mojang.authlib.GameProfile;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.PacketFlow;
+import net.minecraft.server.level.ClientInformation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.network.CommonListenerCookie;
+import net.minecraft.server.network.ServerGamePacketListenerImpl;
+import java.util.UUID;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -66,7 +73,7 @@ public final class SelfTest {
             }
             report(out, ok == SheetData.WRECK.size(), "t_wreck", "wreck has " + ok + "/" + SheetData.WRECK.size() + " blocks");
 
-            FakePlayer pilot = FakePlayer.get(level);
+            ServerPlayer pilot = testPilot(server, level);
             pilot.getInventory().clearContent();
             pilot.getInventory().add(new ItemStack(Items.IRON_INGOT, 3));
             pilot.getInventory().add(new ItemStack(Items.REDSTONE, 2));
@@ -122,6 +129,15 @@ public final class SelfTest {
             ScrapSky.LOG.error("selftest crashed", e);
         }
         return finish(out);
+    }
+
+    /** A real ServerPlayer with an unconnected network handler (Fabric's FakePlayer refuses to ride). */
+    private static ServerPlayer testPilot(MinecraftServer server, ServerLevel level) {
+        GameProfile profile = new GameProfile(UUID.nameUUIDFromBytes("scrapsky-test-pilot".getBytes()), "TestPilot");
+        ServerPlayer p = new ServerPlayer(server, level, profile, ClientInformation.createDefault());
+        new ServerGamePacketListenerImpl(server, new Connection(PacketFlow.SERVERBOUND), p, CommonListenerCookie.createInitial(profile, false));
+        level.addNewPlayer(p);
+        return p;
     }
 
     private static List<String> finish(List<String> out) {

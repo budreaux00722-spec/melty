@@ -82,7 +82,7 @@ public final class SheetData {
         new WreckBlock("canopy_front", "hull_glass", 0, 1, -2, "-"),
         new WreckBlock("canopy_fl", "hull_glass", -1, 1, -2, "-"),
         new WreckBlock("canopy_fr", "hull_glass", 1, 1, -2, "-"),
-        new WreckBlock("canopy_top", "hull_glass", 0, 2, -1, "-"),
+        new WreckBlock("canopy_top", "hull_glass", 0, 2, -2, "-"),
         new WreckBlock("thruster_l", "thruster_broken", -1, 1, 2, "south"),
         new WreckBlock("thruster_r", "thruster_broken", 1, 1, 2, "south"),
         new WreckBlock("tail", "hull_caution", 0, 1, 2, "-"),

@@ -42,7 +42,7 @@ import java.util.stream.Stream;
 public final class MeltyTest {
     private MeltyTest() {}
 
-    enum Step { IDLE, WORLD, SETUP, CLIMB, STAR_MAP, DESCEND, DONE }
+    enum Step { IDLE, WORLD, SETUP, CLIMB, STAR_MAP, DESCEND, LANDING, DONE }
 
     private static Step step = Step.IDLE;
     private static Path checks;
@@ -116,24 +116,36 @@ public final class MeltyTest {
             }
             case STAR_MAP -> {
                 if (timer == 40) {
-                    dev.scrapsky.net.Net.Choose c = new dev.scrapsky.net.Net.Choose("lush");
+                    dev.scrapsky.net.Net.Choose c = new dev.scrapsky.net.Net.Choose("frozen");
                     net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.send(c);
                     ShipEntity.awaitingStarMapClient = false;
                     mc.setScreen(null);
                 }
                 if (timer > 60 && mc.level != null && mc.level.dimension().location().getPath().startsWith("planet_")) {
-                    report("reach-planet", mc.player.getVehicle() instanceof ShipEntity, "arrived on " + mc.level.dimension().location() + " in the ship");
-                    step = Step.DESCEND; timer = 0;
+                    if (mc.player.getVehicle() instanceof ShipEntity) {
+                        report("reach-planet", true, "arrived on " + mc.level.dimension().location() + " in the ship");
+                        step = Step.DESCEND; timer = 0;
+                    } else if (timer > 60 + 20 * 15) fail("reach-planet", "arrived on " + mc.level.dimension().location() + " but not in the ship");
                 }
                 if (timer > 20 * 30) fail("reach-planet", "the Star Map choice didn't move the ship");
             }
             case DESCEND -> {
                 down = true; up = forward = false;
-                boolean low = mc.player.getVehicle() != null && mc.player.getVehicle().getDeltaMovement().y > -0.05 && timer > 40;
-                if (low || timer > 20 * 60) {
+                var v = mc.player.getVehicle();
+                int ground = mc.level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, mc.player.getBlockX(), mc.player.getBlockZ());
+                boolean low = v != null && (v.getY() - ground < 3 || (timer > 60 && v.getDeltaMovement().y > -0.02));
+                if (low || timer > 20 * 90) {
                     down = false;
+                    step = Step.LANDING;
+                    timer = 0;
+                }
+            }
+            case LANDING -> {
+                // land the way a player does: hold Shift for half a second
+                mc.options.keyShift.setDown(timer < 10);
+                if (timer == 40) {
                     step = Step.DONE;
-                    server.execute(MeltyTest::land);
+                    server.execute(MeltyTest::checkLanded);
                 }
             }
             default -> {}
@@ -168,17 +180,15 @@ public final class MeltyTest {
         Minecraft.getInstance().execute(() -> { step = ship != null ? Step.CLIMB : Step.DONE; timer = 0; });
     }
 
-    private static void land() {
+    private static void checkLanded() {
         var server = Minecraft.getInstance().getSingleplayerServer();
         if (server == null) return;
         ServerPlayer player = server.getPlayerList().getPlayers().get(0);
-        if (!(player.getVehicle() instanceof ShipEntity ship)) { fail("ship-lands", "not in a ship"); return; }
-        // settle onto the ground, then land
-        ServerLevel level = (ServerLevel) ship.level();
-        int ground = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ship.getBlockX(), ship.getBlockZ());
-        ship.moveTo(ship.getX(), Math.max(ground, ship.getY() - 40) + 1, ship.getZ());
-        player.stopRiding();
-        report("ship-lands", ship.isRemoved(), ship.isRemoved() ? "the ship became blocks again on the planet" : "couldn't land");
+        boolean landed = !player.isPassenger() && player.isAlive()
+                && player.level().getBlockState(player.blockPosition().below()).getBlock() == ScrapSky.BLOCKS.get("driver_seat");
+        ScrapSky.LOG.info("after landing: pilot at {} on {}, in {}", player.position(), player.level().getBlockState(player.blockPosition().below()), player.level().getBlockState(player.blockPosition()));
+        report("ship-lands", landed, landed ? "the ship became blocks again on the planet, pilot standing on the seat"
+                : (player.isPassenger() ? "no open ground below, still flying" : "pilot not on the seat (alive=" + player.isAlive() + ")"));
     }
 
     private static void fail(String check, String why) {

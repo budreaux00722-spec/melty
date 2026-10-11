@@ -1,15 +1,60 @@
 {
   "sheet": "tests",
   "about": "How each system is proven. 'where' says whether it can run in the build container (no games installed) or needs a PC with all three games.",
-  "columns": ["id", "where", "how", "status"],
+  "columns": [
+    "id",
+    "where",
+    "how",
+    "status"
+  ],
   "rows": [
-    {"id": "t_runtime_pack", "where": "unit + player PC", "how": "unit tests build synthetic SM/NMS files and check the pack; on a PC the log lists every part and track read from the real games", "status": "unit"},
-    {"id": "t_wreck", "where": "container (dev server)", "how": "GameTest builds the wreck and checks every block", "status": "planned"},
-    {"id": "t_repair", "where": "container (dev server)", "how": "GameTest repairs the broken thruster with a mock player", "status": "planned"},
-    {"id": "t_assembly", "where": "container (dev server)", "how": "GameTest assembles the wreck into a Ship and checks the block count", "status": "planned"},
-    {"id": "t_flight", "where": "container (dev client)", "how": "scripted test mode flies the ship up and logs positions", "status": "planned"},
-    {"id": "t_landing", "where": "container (dev server)", "how": "GameTest lands a Ship and checks blocks are placed back", "status": "planned"},
-    {"id": "t_star_map", "where": "container (dev server)", "how": "GameTest moves a Ship to each planet dimension", "status": "planned"},
-    {"id": "t_mp", "where": "player PC", "how": "host + second copy join through melty.properties; logs sent to setup_multiplayer", "status": "planned"}
+    {
+      "id": "t_runtime_pack",
+      "where": "unit + player PC",
+      "how": "unit tests on files in each game's real format; client builds the pack from them at start. Still to see: the real games' files on a PC",
+      "status": "passed"
+    },
+    {
+      "id": "t_wreck",
+      "where": "container (dev server)",
+      "how": "server self-test (runSelfTest) and client test mode both build the wreck and check all 36 blocks",
+      "status": "passed"
+    },
+    {
+      "id": "t_repair",
+      "where": "container (dev server)",
+      "how": "self-test: refuses to fly with broken thrusters, then repairs with 3 iron + 2 redstone",
+      "status": "passed"
+    },
+    {
+      "id": "t_assembly",
+      "where": "container (dev server)",
+      "how": "self-test and client test mode assemble 33/33 blocks with the pilot seated",
+      "status": "passed"
+    },
+    {
+      "id": "t_flight",
+      "where": "container (dev client)",
+      "how": "client test mode flies the ship from the wreck to above y=300 on screen",
+      "status": "passed"
+    },
+    {
+      "id": "t_landing",
+      "where": "container (dev server)",
+      "how": "client test mode descends and presses Shift: ship becomes blocks, pilot stands on the seat, no fall damage",
+      "status": "passed"
+    },
+    {
+      "id": "t_star_map",
+      "where": "container (dev server)",
+      "how": "all three planets generate with their biomes; client picks a planet on the Star Map and arrives in the ship",
+      "status": "passed"
+    },
+    {
+      "id": "t_mp",
+      "where": "player PC",
+      "how": "host + second copy join through melty.properties; logs sent to setup_multiplayer",
+      "status": "planned"
+    }
   ]
 }

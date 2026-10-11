@@ -14,6 +14,17 @@ repositories {
 loom {
     mixin { defaultRefmapName = 'scrapsky.refmap.json' }
     runs {
+        // a second client for host/join tests on one machine (offline accounts, so LAN auth is off)
+        client2 {
+            client()
+            name 'Second client (joiner)'
+            runDir 'run2'
+            programArgs '--username', 'Joiner'
+            vmArg '-Dscrapsky.dev.offline=true'
+        }
+        client {
+            vmArg '-Dscrapsky.dev.offline=true'
+        }
         // headless self-test on a dedicated server: ./gradlew runSelfTest
         selfTest {
             server()

@@ -26,9 +26,10 @@ public class StarMapScreen extends Screen {
         int y = this.height / 2 - planets.size() * 26 / 2 + 10;
         for (Net.PlanetInfo p : planets) {
             if (p.id().equals(current)) continue;
-            String label = p.name() + (p.descriptor().isEmpty() ? "" : "  -  " + p.descriptor());
+            String label = p.name() + (p.descriptor().isEmpty() ? "" : "  -  " + p.descriptor()) + (p.weather().isEmpty() ? "" : "  (" + p.weather() + ")");
+            int w = Math.min(this.width - 20, Math.max(300, this.font.width(label) + 24));
             addRenderableWidget(Button.builder(Component.literal(label), b -> choose(p.id()))
-                    .bounds(this.width / 2 - 150, y, 300, 20).build());
+                    .bounds(this.width / 2 - w / 2, y, w, 20).build());
             y += 26;
         }
     }
@@ -50,12 +51,6 @@ public class StarMapScreen extends Screen {
     public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
         super.render(g, mouseX, mouseY, partialTick);
         g.drawCenteredString(this.font, this.title, this.width / 2, this.height / 2 - planets.size() * 13 - 20, 0x9FE7FF);
-        int y = this.height / 2 - planets.size() * 26 / 2 + 10;
-        for (Net.PlanetInfo p : planets) {
-            if (p.id().equals(current)) continue;
-            if (!p.weather().isEmpty()) g.drawString(this.font, p.weather(), this.width / 2 + 156, y + 6, 0xA0A0A0);
-            y += 26;
-        }
     }
 
     @Override

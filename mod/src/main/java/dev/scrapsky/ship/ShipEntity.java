@@ -1,7 +1,6 @@
 package dev.scrapsky.ship;
 
 import dev.scrapsky.ScrapSky;
-import dev.scrapsky.block.PartBlock;
 import dev.scrapsky.net.Net;
 import dev.scrapsky.world.PlanetCatalog;
 import net.minecraft.core.BlockPos;
@@ -165,6 +164,12 @@ public class ShipEntity extends Entity {
     @Override
     public boolean isPushable() { return false; }
 
+    /** A ship lowers itself under thrust: it never takes or passes on fall damage. */
+    @Override
+    public boolean causeFallDamage(float distance, float multiplier, net.minecraft.world.damagesource.DamageSource source) {
+        return false;
+    }
+
     @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
         if (player.isSecondaryUseActive() || this.isVehicle()) return InteractionResult.PASS;
@@ -172,11 +177,30 @@ public class ShipEntity extends Entity {
         return InteractionResult.SUCCESS;
     }
 
+    /** The pilot always steps off on top of the Driver's Seat. */
+    @Override
+    public Vec3 getDismountLocationForPassenger(LivingEntity passenger) {
+        BlockPos seat = BlockPos.containing(this.getX(), this.getY() - minY + 0.01, this.getZ());
+        return new Vec3(seat.getX() + 0.5, seat.getY() + 1.0, seat.getZ() + 0.5);
+    }
+
+    private Entity remount;
+
     @Override
     protected void removePassenger(Entity passenger) {
         super.removePassenger(passenger);
+        passenger.resetFallDistance();
         if (!this.level().isClientSide && !transferring && !this.isRemoved()) {
-            if (!tryLand() && passenger instanceof Player p) p.displayClientMessage(Component.translatable("scrapsky.msg.cant_land"), true);
+            Vec3 standOn = getDismountLocationForPassenger(passenger instanceof LivingEntity le ? le : null);
+            if (tryLand()) {
+                // the ship is gone: stand the pilot on the seat it became
+                if (passenger instanceof ServerPlayer sp) sp.connection.teleport(standOn.x, standOn.y, standOn.z, sp.getYRot(), sp.getXRot());
+                else passenger.moveTo(standOn.x, standOn.y, standOn.z);
+            } else if (passenger instanceof Player p) {
+                // somewhere it can't land: keep the pilot aboard rather than dropping them
+                p.displayClientMessage(Component.translatable("scrapsky.msg.cant_land"), true);
+                if (p.isAlive()) remount = p;
+            }
         }
     }
 
@@ -194,6 +218,7 @@ public class ShipEntity extends Entity {
     @Override
     public void tick() {
         super.tick();
+        this.resetFallDistance();
         if (this.isControlledByLocalInstance()) {
             float yaw = this.getYRot();
             if (inLeft) yaw -= 4f;
@@ -222,6 +247,12 @@ public class ShipEntity extends Entity {
     public static boolean awaitingStarMapClient;
 
     private void serverTick() {
+        if (remount != null) {
+            Entity r = remount;
+            remount = null;
+            if (r.isAlive() && !r.isPassenger() && r.level() == this.level() && r.distanceToSqr(this) < 400) r.startRiding(this, true);
+        }
+        for (Entity e : this.getPassengers()) e.resetFallDistance();
         if (this.getControllingPassenger() instanceof ServerPlayer pilot) {
             if (!awaitingStarMap && this.getY() > ORBIT_Y) {
                 awaitingStarMap = true;
@@ -231,10 +262,6 @@ public class ShipEntity extends Entity {
                 awaitingStarMap = false;
             }
         }
-    }
-
-    public void stayInOrbit() {
-        // the pilot closed the Star Map: fly down below REARM_Y to open it again
     }
 
     // ---------------------------------------------------------------- landing
@@ -258,13 +285,17 @@ public class ShipEntity extends Entity {
         for (ShipBlock b : blocks) {
             BlockPos p = seat.offset(b.rel().rotate(rot));
             BlockState there = level.getBlockState(p);
-            if (!there.canBeReplaced() || level.isOutsideBuildHeight(p)) return false;
+            if (!(there.canBeReplaced() || there.is(net.minecraft.tags.BlockTags.LEAVES)) || level.isOutsideBuildHeight(p))
+                ScrapSky.LOG.info("Ship can't land at {}: {} is in the way at {}", seat, there, p);
+            // open ground: air, plants, snow, water, or leaves (cleared), never other blocks
+            if (!(there.canBeReplaced() || there.is(net.minecraft.tags.BlockTags.LEAVES)) || level.isOutsideBuildHeight(p)) return false;
             targets.add(p);
         }
         for (int i = 0; i < blocks.size(); i++) {
             level.setBlock(targets.get(i), blocks.get(i).state().rotate(rot), Block.UPDATE_ALL);
         }
         level.playSound(null, seat, SoundEvents.PISTON_CONTRACT, SoundSource.BLOCKS, 1f, 0.6f);
+        ScrapSky.LOG.info("Ship landed with its seat at {} (ship y {})", seat, this.getY());
         this.discard();
         return true;
     }
@@ -301,6 +332,4 @@ public class ShipEntity extends Entity {
     protected void addAdditionalSaveData(CompoundTag tag) {
         tag.put("Ship", this.entityData.get(DATA_BLOCKS).copy());
     }
-
-    public boolean isPartBlock(BlockState s) { return s.getBlock() instanceof PartBlock; }
 }

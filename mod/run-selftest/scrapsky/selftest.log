@@ -1,0 +1,11 @@
+PASS t_wreck: wreck has 36/36 blocks
+PASS t_repair: ship refuses to fly with only broken thrusters
+PASS t_repair: broken thruster repaired with 3 iron and 2 redstone
+PASS t_assembly: assembled 33/33 blocks, pilot seated, world cleared
+PASS t_flight: speed 0.50 blocks/tick (mass 47, lift 60)
+PASS t_star_map: planet lush "Planet A" generated, ground at y=63, biome scrapsky:paradise
+PASS t_star_map: planet frozen "Planet B" generated, ground at y=63, biome scrapsky:frozen
+PASS t_star_map: planet toxic "Planet C" generated, ground at y=63, biome scrapsky:toxic
+PASS t_star_map: ship and pilot travelled to the lush planet
+PASS t_landing: ship landed and became blocks again
+SELFTEST PASSED
