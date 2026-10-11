@@ -1,0 +1,13 @@
+.gradle/
+build/
+mod/build/
+mod/run/
+mod/.gradle/
+out/
+*.class
+dist/
+# never commit game files or anything extracted from them
+*.wem
+*.pak
+*.mbin
+*.MBIN

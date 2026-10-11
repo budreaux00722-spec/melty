@@ -1,0 +1,96 @@
+{
+  "has_precipitation": false,
+  "temperature": 1.2,
+  "downfall": 0.4,
+  "effects": {
+    "sky_color": 13033546,
+    "fog_color": 10467386,
+    "water_color": 8376623,
+    "water_fog_color": 8376623,
+    "grass_color": 12110134,
+    "foliage_color": 9084447,
+    "music": {
+      "sound": "scrapsky:planet_music",
+      "min_delay": 600,
+      "max_delay": 2400,
+      "replace_current_music": true
+    }
+  },
+  "spawners": {
+    "monster": [
+      {
+        "type": "minecraft:zombie",
+        "weight": 60,
+        "minCount": 1,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft:spider",
+        "weight": 40,
+        "minCount": 1,
+        "maxCount": 2
+      }
+    ],
+    "creature": [
+      {
+        "type": "minecraft:sheep",
+        "weight": 12,
+        "minCount": 2,
+        "maxCount": 4
+      },
+      {
+        "type": "minecraft:cow",
+        "weight": 8,
+        "minCount": 2,
+        "maxCount": 4
+      }
+    ],
+    "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {},
+  "carvers": {
+    "air": [
+      "minecraft:cave",
+      "minecraft:cave_extra_underground",
+      "minecraft:canyon"
+    ]
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_coal_lower",
+      "minecraft:ore_iron_upper",
+      "minecraft:ore_iron_middle",
+      "minecraft:ore_iron_small",
+      "minecraft:ore_gold",
+      "minecraft:ore_redstone",
+      "minecraft:ore_diamond",
+      "minecraft:ore_copper"
+    ],
+    [],
+    [
+      "minecraft:spring_water"
+    ],
+    [
+      "minecraft:trees_swamp",
+      "minecraft:patch_grass_normal",
+      "minecraft:brown_mushroom_swamp",
+      "minecraft:red_mushroom_swamp",
+      "minecraft:patch_waterlily"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ]
+}

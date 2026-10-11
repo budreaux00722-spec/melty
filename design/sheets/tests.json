@@ -1,0 +1,15 @@
+{
+  "sheet": "tests",
+  "about": "How each system is proven. 'where' says whether it can run in the build container (no games installed) or needs a PC with all three games.",
+  "columns": ["id", "where", "how", "status"],
+  "rows": [
+    {"id": "t_runtime_pack", "where": "unit + player PC", "how": "unit tests build synthetic SM/NMS files and check the pack; on a PC the log lists every part and track read from the real games", "status": "unit"},
+    {"id": "t_wreck", "where": "container (dev server)", "how": "GameTest builds the wreck and checks every block", "status": "planned"},
+    {"id": "t_repair", "where": "container (dev server)", "how": "GameTest repairs the broken thruster with a mock player", "status": "planned"},
+    {"id": "t_assembly", "where": "container (dev server)", "how": "GameTest assembles the wreck into a Ship and checks the block count", "status": "planned"},
+    {"id": "t_flight", "where": "container (dev client)", "how": "scripted test mode flies the ship up and logs positions", "status": "planned"},
+    {"id": "t_landing", "where": "container (dev server)", "how": "GameTest lands a Ship and checks blocks are placed back", "status": "planned"},
+    {"id": "t_star_map", "where": "container (dev server)", "how": "GameTest moves a Ship to each planet dimension", "status": "planned"},
+    {"id": "t_mp", "where": "player PC", "how": "host + second copy join through melty.properties; logs sent to setup_multiplayer", "status": "planned"}
+  ]
+}

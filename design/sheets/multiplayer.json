@@ -1,0 +1,12 @@
+{
+  "sheet": "multiplayer",
+  "about": "How friends play together. Paths are relative to the Minecraft instance folder ({minecraft-instance} = {managed}/Prism/instances/ScrapSky/.minecraft).",
+  "columns": ["id", "value", "notes"],
+  "rows": [
+    {"id": "max_players", "value": 4, "notes": "chosen by the creator; enforced by mp_cap"},
+    {"id": "relay", "value": "e4mc 5.x for Fabric 1.21.1 (MIT, by Skye), bundled in the instance mods folder", "notes": "gives the open world a public domain so friends behind home routers can join; no port forwarding"},
+    {"id": "host_log", "value": "{minecraft-instance}/scrapsky/melty.log :: 'Melty join address: '", "notes": "connect.address"},
+    {"id": "join_file", "value": "{minecraft-instance}/config/scrapsky/melty.properties :: join", "notes": "connect.joinFile; empty = host"},
+    {"id": "join_log", "value": "{minecraft-instance}/scrapsky/melty.log :: 'Melty joined: '", "notes": "written once connected"}
+  ]
+}

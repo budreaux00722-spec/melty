@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "W  ",
+    "WWW",
+    "I I"
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "id": "scrapsky:driver_seat",
+    "count": 1
+  }
+}

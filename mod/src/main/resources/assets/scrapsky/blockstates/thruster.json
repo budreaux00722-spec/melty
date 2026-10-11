@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "scrapsky:block/thruster"
+    },
+    "facing=east": {
+      "model": "scrapsky:block/thruster",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "scrapsky:block/thruster",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "scrapsky:block/thruster",
+      "y": 270
+    }
+  }
+}

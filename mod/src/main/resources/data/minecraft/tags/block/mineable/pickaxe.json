@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "scrapsky:hull_metal",
+    "scrapsky:hull_concrete",
+    "scrapsky:hull_bricks",
+    "scrapsky:hull_caution",
+    "scrapsky:thruster",
+    "scrapsky:thruster_broken",
+    "scrapsky:driver_seat"
+  ]
+}

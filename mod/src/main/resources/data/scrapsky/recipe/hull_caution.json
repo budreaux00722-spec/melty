@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "CYC",
+    "YCY",
+    "CYC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:cobblestone"
+    },
+    "Y": {
+      "item": "minecraft:yellow_dye"
+    }
+  },
+  "result": {
+    "id": "scrapsky:hull_caution",
+    "count": 8
+  }
+}

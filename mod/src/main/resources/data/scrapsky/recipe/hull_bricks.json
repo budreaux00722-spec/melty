@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "BB",
+    "BB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:brick"
+    }
+  },
+  "result": {
+    "id": "scrapsky:hull_bricks",
+    "count": 8
+  }
+}

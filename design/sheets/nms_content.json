@@ -1,0 +1,96 @@
+{
+  "sheet": "nms_content",
+  "about": "What is read from the player's No Man's Sky install and how it is picked. Keys and values are regular expressions matched against the English localisation table (case-insensitive). 'fallback' is shown only if nothing in the player's copy matches, and is logged.",
+  "columns": [
+    "id",
+    "use",
+    "pak",
+    "fileMatch",
+    "keyMatch",
+    "valueMatch",
+    "pick",
+    "fallback"
+  ],
+  "rows": [
+    {
+      "id": "loc_english",
+      "use": "localisation table source",
+      "pak": "(?i).*language.*\\.pak",
+      "fileMatch": "(?i).*english.*\\.mbin$",
+      "keyMatch": ".*",
+      "valueMatch": ".*",
+      "pick": "all entries",
+      "fallback": "-"
+    },
+    {
+      "id": "vocabulary",
+      "use": "planet name generator training words",
+      "pak": "loc_english",
+      "fileMatch": "-",
+      "keyMatch": ".*",
+      "valueMatch": "proper nouns: capitalised words of 4-10 letters never seen in lower case",
+      "pick": "order-2 letter Markov chain seeded by world seed + planet nameSalt",
+      "fallback": "Unknown Planet"
+    },
+    {
+      "id": "d_home",
+      "use": "home world descriptor",
+      "pak": "loc_english",
+      "fileMatch": "-",
+      "keyMatch": "(?i)(^|_)(BIOME|PLANET)_?.*(LUSH|TEMPERATE|EARTH|PARADISE)(_|$)",
+      "valueMatch": "^[A-Za-z' -]{4,32}$",
+      "pick": "first match by key order",
+      "fallback": "Home"
+    },
+    {
+      "id": "d_lush",
+      "use": "lush planet descriptor",
+      "pak": "loc_english",
+      "fileMatch": "-",
+      "keyMatch": "(?i)(^|_)(PARADISE|LUSH|TROPICAL|VERDANT)(_|$)",
+      "valueMatch": "^[A-Za-z' -]{4,32}$",
+      "pick": "seeded pick among matches",
+      "fallback": "Lush"
+    },
+    {
+      "id": "d_frozen",
+      "use": "frozen planet descriptor",
+      "pak": "loc_english",
+      "fileMatch": "-",
+      "keyMatch": "(?i)(^|_)(FROZEN|FREEZING|COLD|ICY|GLACIAL|SNOW|SNOWY|BLIZZARD)(_|$)",
+      "valueMatch": "^[A-Za-z' -]{4,32}$",
+      "pick": "seeded pick among matches",
+      "fallback": "Frozen"
+    },
+    {
+      "id": "d_toxic",
+      "use": "toxic planet descriptor",
+      "pak": "loc_english",
+      "fileMatch": "-",
+      "keyMatch": "(?i)(^|_)(TOXIC|CAUSTIC|NOXIOUS|POISON|POISONOUS)(_|$)",
+      "valueMatch": "^[A-Za-z' -]{4,32}$",
+      "pick": "seeded pick among matches",
+      "fallback": "Toxic"
+    },
+    {
+      "id": "d_weather",
+      "use": "weather line under every planet name",
+      "pak": "loc_english",
+      "fileMatch": "-",
+      "keyMatch": "(?i)(^|_)WEATHER(_|$)",
+      "valueMatch": "^[A-Za-z' -]{4,32}$",
+      "pick": "seeded pick among matches",
+      "fallback": "-"
+    },
+    {
+      "id": "planet_music",
+      "use": "music on planets and on the star map",
+      "pak": "(?i).*audio.*\\.pak",
+      "fileMatch": "(?i).*\\.wem$",
+      "keyMatch": "-",
+      "valueMatch": "Wwise Vorbis WEM, at least 60 seconds long",
+      "pick": "the 6 largest WEM files that convert, cached as Ogg in the instance's scrapsky/cache folder (generated on the player's PC, never uploaded)",
+      "fallback": "planets play Minecraft's own music"
+    }
+  ]
+}

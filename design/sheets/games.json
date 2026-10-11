@@ -1,0 +1,10 @@
+{
+  "sheet": "games",
+  "about": "Every game the mashup needs, its role in the Melty recipe and what it brings. Nothing from any game is shipped; each is read from the player's own install.",
+  "columns": ["id", "name", "meltySlug", "role", "folderToken", "envVar", "steamAppId", "engine", "route", "brings", "readerClass"],
+  "rows": [
+    {"id": "minecraft", "name": "Minecraft: Java Edition", "meltySlug": "minecraft-java", "role": "primary", "folderToken": "{managed}/Prism/instances/ScrapSky/.minecraft", "envVar": "-", "steamAppId": "-", "engine": "minecraft-java (Java 21)", "route": "Fabric Loader mod in a bundled portable Prism Launcher instance (mmc-pack.json names Fabric; Prism installs it on first start)", "brings": "the world, survival, mining, crafting, multiplayer hosting", "readerClass": "-"},
+    {"id": "scrap_mechanic", "name": "Scrap Mechanic", "meltySlug": "custom-scrap-mechanic", "role": "companion", "folderToken": "{game:custom-scrap-mechanic}", "envVar": "SCRAPSKY_SM_DIR", "steamAppId": "387990", "engine": "Axolot in-house engine (Lua scripting, JSON shapesets)", "route": "read its JSON shapesets, English language files and TGA/DDS textures from the player's install at start", "brings": "the building parts: block materials, thruster, driver's seat, with their real names, textures, colours and physics materials", "readerClass": "ScrapMechanicLibrary"},
+    {"id": "no_mans_sky", "name": "No Man's Sky", "meltySlug": "no-mans-sky", "role": "companion", "folderToken": "{game:no-mans-sky}", "envVar": "SCRAPSKY_NMS_DIR", "steamAppId": "275850", "engine": "Hello Games in-house engine (HGPAK archives, MBIN data, Wwise audio)", "route": "read GAMEDATA/PCBANKS HGPAK archives (zstd chunks) from the player's install: English localisation MBINs and Wwise Vorbis WEM music converted to Ogg in memory", "brings": "planet music (its own soundtrack), planet descriptors (biome and weather words) and the proper-noun vocabulary planet names are generated from", "readerClass": "NoMansSkyLibrary"}
+  ]
+}

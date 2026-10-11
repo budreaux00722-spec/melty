@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "scrapsky:block/driver_seat"
+    },
+    "facing=east": {
+      "model": "scrapsky:block/driver_seat",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "scrapsky:block/driver_seat",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "scrapsky:block/driver_seat",
+      "y": 270
+    }
+  }
+}

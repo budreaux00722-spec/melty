@@ -1,0 +1,15 @@
+{
+  "sheet": "recipes",
+  "about": "How the player crafts each part from Minecraft materials.",
+  "columns": ["id", "result", "count", "pattern", "key"],
+  "rows": [
+    {"id": "r_hull_wood", "result": "hull_wood", "count": 8, "pattern": ["PP", "PP"], "key": {"P": "#minecraft:planks"}},
+    {"id": "r_hull_metal", "result": "hull_metal", "count": 8, "pattern": ["I I", " C ", "I I"], "key": {"I": "minecraft:iron_ingot", "C": "minecraft:cobblestone"}},
+    {"id": "r_hull_concrete", "result": "hull_concrete", "count": 8, "pattern": ["SS", "SS"], "key": {"S": "minecraft:stone"}},
+    {"id": "r_hull_glass", "result": "hull_glass", "count": 8, "pattern": ["GG", "GG"], "key": {"G": "minecraft:glass"}},
+    {"id": "r_hull_bricks", "result": "hull_bricks", "count": 8, "pattern": ["BB", "BB"], "key": {"B": "minecraft:brick"}},
+    {"id": "r_hull_caution", "result": "hull_caution", "count": 8, "pattern": ["CYC", "YCY", "CYC"], "key": {"C": "minecraft:cobblestone", "Y": "minecraft:yellow_dye"}},
+    {"id": "r_thruster", "result": "thruster", "count": 1, "pattern": ["III", "IRI", "IFI"], "key": {"I": "minecraft:iron_ingot", "R": "minecraft:redstone", "F": "minecraft:furnace"}},
+    {"id": "r_driver_seat", "result": "driver_seat", "count": 1, "pattern": ["W  ", "WWW", "I I"], "key": {"W": "#minecraft:wool", "I": "minecraft:iron_ingot"}}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "sheet": "controls",
+  "about": "Pilot controls. All are Minecraft's own movement keys so players rebind them in Controls as usual.",
+  "columns": ["id", "key", "minecraftBinding", "effect"],
+  "rows": [
+    {"id": "c_forward", "key": "W / S", "minecraftBinding": "key.forward / key.back", "effect": "fly forward / back along the ship's heading"},
+    {"id": "c_turn", "key": "A / D", "minecraftBinding": "key.left / key.right", "effect": "turn the ship 4 degrees per tick"},
+    {"id": "c_up", "key": "Space", "minecraftBinding": "key.jump", "effect": "climb"},
+    {"id": "c_down", "key": "Ctrl", "minecraftBinding": "key.sprint", "effect": "descend"},
+    {"id": "c_land", "key": "Shift", "minecraftBinding": "key.sneak", "effect": "land and turn the ship back into blocks"}
+  ]
+}

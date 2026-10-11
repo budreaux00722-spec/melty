@@ -1,0 +1,15 @@
+{
+  "sheet": "hooks",
+  "about": "Every place the mod attaches to Minecraft or Fabric.",
+  "columns": ["id", "kind", "target", "purpose", "javaClass"],
+  "rows": [
+    {"id": "h_pack_source", "kind": "mixin", "target": "net.minecraft.server.packs.repository.PackRepository#<init>", "purpose": "add the runtime pack as a required, top-positioned client pack", "javaClass": "PackRepositoryMixin"},
+    {"id": "h_player_join", "kind": "fabric-event", "target": "ServerPlayConnectionEvents.JOIN", "purpose": "starter wreck, player cap, planet catalog sync", "javaClass": "ScrapSky"},
+    {"id": "h_use_block", "kind": "block-override", "target": "Block#useItemOn / Block#useWithoutItem", "purpose": "thruster repair and boarding the driver's seat", "javaClass": "PartBlock"},
+    {"id": "h_client_tick", "kind": "fabric-event", "target": "ClientTickEvents.END_CLIENT_TICK", "purpose": "send the pilot's keys to the ship it rides; first-title-screen auto join", "javaClass": "ScrapSkyClient"},
+    {"id": "h_payloads", "kind": "fabric-networking", "target": "PayloadTypeRegistry play s2c/c2s", "purpose": "open star map, choose destination, planet catalog, arrival title", "javaClass": "Net"},
+    {"id": "h_server_started", "kind": "fabric-event", "target": "ServerLifecycleEvents.SERVER_STARTED", "purpose": "auto-open the integrated server to others", "javaClass": "MeltyLink"},
+    {"id": "h_title_screen", "kind": "fabric-event", "target": "ScreenEvents.AFTER_INIT (TitleScreen)", "purpose": "auto join the host from melty.properties", "javaClass": "MeltyLink"},
+    {"id": "h_log_tap", "kind": "log4j-appender", "target": "root logger", "purpose": "catch e4mc's 'Domain assigned: ' line", "javaClass": "MeltyLink"}
+  ]
+}

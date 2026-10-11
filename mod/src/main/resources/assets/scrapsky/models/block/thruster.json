@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "scrapsky:block/thruster_front",
+    "side": "scrapsky:block/thruster",
+    "top": "scrapsky:block/thruster"
+  }
+}

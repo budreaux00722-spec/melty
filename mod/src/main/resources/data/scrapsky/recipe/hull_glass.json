@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "GG",
+    "GG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "id": "scrapsky:hull_glass",
+    "count": 8
+  }
+}
