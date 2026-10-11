@@ -37,6 +37,9 @@ public final class RuntimePack {
 
     /** What was read this start (for the Melty test checks). */
     public static int smParts, nmsTracks;
+    /** One line per part: what its texture held (for the Melty test report). */
+    public static final List<String> smDiag = new ArrayList<>();
+    public static boolean smColourOnly;
 
     public static Path dir() {
         return FabricLoader.getInstance().getGameDir().resolve("scrapsky").resolve("runtime-pack");
@@ -96,6 +99,8 @@ public final class RuntimePack {
                 }
             }
             smParts++;
+            smDiag.add(p.id() + ": " + r.diag());
+            if (r.diag().contains("colour only")) smColourOnly = true;
             String title = p.kind() == SheetData.Kind.BROKEN_THRUSTER ? "Broken " + r.title() : r.title();
             entries.add("  \"block.scrapsky." + p.id() + "\": \"" + title.replace("\\", "\\\\").replace("\"", "\\\"") + "\"");
         }

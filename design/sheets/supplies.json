@@ -1,0 +1,46 @@
+{
+  "sheet": "supplies",
+  "about": "What the salvage crate beside the starter wreck holds: enough to repair one Broken Thruster straight away, plus a few spare parts to start building. Offsets are from the wreck's anchor.",
+  "columns": [
+    "id",
+    "item",
+    "count",
+    "dx",
+    "dy",
+    "dz"
+  ],
+  "rows": [
+    {
+      "id": "crate_iron",
+      "item": "minecraft:iron_ingot",
+      "count": 3,
+      "dx": -3,
+      "dy": 0,
+      "dz": 1
+    },
+    {
+      "id": "crate_redstone",
+      "item": "minecraft:redstone",
+      "count": 2,
+      "dx": -3,
+      "dy": 0,
+      "dz": 1
+    },
+    {
+      "id": "crate_wood",
+      "item": "scrapsky:hull_wood",
+      "count": 16,
+      "dx": -3,
+      "dy": 0,
+      "dz": 1
+    },
+    {
+      "id": "crate_glass",
+      "item": "scrapsky:hull_glass",
+      "count": 4,
+      "dx": -3,
+      "dy": 0,
+      "dz": 1
+    }
+  ]
+}

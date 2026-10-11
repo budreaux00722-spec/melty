@@ -56,8 +56,7 @@ public final class MeltyTest {
 
     static Path findTestFile() {
         String la = System.getenv("LOCALAPPDATA");
-        if (la == null) return null;
-        Path dir = Path.of(la, "Melty", "test");
+        Path dir = la != null ? Path.of(la, "Melty", "test") : Path.of(System.getProperty("user.home"), "AppData", "Local", "Melty", "test");
         if (!Files.isDirectory(dir)) return null;
         try (Stream<Path> s = Files.list(dir)) {
             return s.filter(p -> {
@@ -85,7 +84,8 @@ public final class MeltyTest {
             ScrapSky.LOG.warn("Melty test file unreadable: {}", e.toString());
             return;
         }
-        report("scrap-mechanic-parts", RuntimePack.smParts >= 6, RuntimePack.smParts + " of " + SheetData.PARTS.size() + " parts read from Scrap Mechanic");
+        report("scrap-mechanic-parts", RuntimePack.smParts >= 6 && !RuntimePack.smColourOnly,
+                RuntimePack.smParts + " of " + SheetData.PARTS.size() + " parts read; " + String.join("; ", RuntimePack.smDiag));
         report("no-mans-sky-music", RuntimePack.nmsTracks >= 1, RuntimePack.nmsTracks + " No Man's Sky tracks converted");
         step = Step.WORLD;
         pendingCreate = true;
@@ -93,7 +93,10 @@ public final class MeltyTest {
 
     private static boolean pendingCreate;
 
+    private static int lookTimer;
+
     public static void tick(Minecraft mc) {
+        if (step == Step.IDLE && mc.screen instanceof TitleScreen ts && ++lookTimer % 20 == 0) onTitleScreen(mc, ts);
         if (!active()) return;
         if (pendingCreate && mc.screen instanceof TitleScreen ts) {
             pendingCreate = false;

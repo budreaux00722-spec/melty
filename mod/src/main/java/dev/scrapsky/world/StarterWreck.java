@@ -45,6 +45,9 @@ public final class StarterWreck {
     }
 
     public static void ensure(MinecraftServer server, ServerPlayer player) {
+        // every Scrap Sky part shows in the recipe book
+        player.awardRecipes(server.getRecipeManager().getRecipes().stream()
+                .filter(r -> r.id().getNamespace().equals(ScrapSky.MODID)).toList());
         ServerLevel level = server.overworld();
         State st = state(level);
         if (st.built) return;
@@ -66,6 +69,17 @@ public final class StarterWreck {
             for (int dy = 0; dy <= 4; dy++) level.setBlock(anchor.offset(dx, dy, dz), Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
             BlockPos below = anchor.offset(dx, -1, dz);
             if (level.getBlockState(below).canBeReplaced()) level.setBlock(below, Blocks.COARSE_DIRT.defaultBlockState(), Block.UPDATE_CLIENTS);
+        }
+        // salvage crate (sheet "supplies")
+        for (SheetData.Supply sup : SheetData.SUPPLIES) {
+            BlockPos at = anchor.offset(sup.dx(), sup.dy(), sup.dz());
+            if (!level.getBlockState(at).is(Blocks.CHEST)) level.setBlock(at, Blocks.CHEST.defaultBlockState(), Block.UPDATE_ALL);
+            if (level.getBlockEntity(at) instanceof net.minecraft.world.level.block.entity.ChestBlockEntity chest) {
+                var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(sup.item()));
+                for (int i = 0; i < chest.getContainerSize(); i++) {
+                    if (chest.getItem(i).isEmpty()) { chest.setItem(i, new net.minecraft.world.item.ItemStack(item, sup.count())); break; }
+                }
+            }
         }
         for (SheetData.WreckBlock w : SheetData.WRECK) {
             PartBlock block = ScrapSky.BLOCKS.get(w.part());

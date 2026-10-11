@@ -159,6 +159,19 @@
       ],
       "javaClass": "MeltyLink",
       "testedBy": "t_mp"
+    },
+    {
+      "id": "salvage_crate",
+      "side": "server",
+      "trigger": "the starter wreck is built",
+      "does": "places a chest beside the wreck holding the repair materials and some spare parts (sheet 'supplies'), and unlocks every Scrap Sky recipe in the player's recipe book on join",
+      "uses": [
+        "supplies:crate_iron",
+        "supplies:crate_redstone",
+        "hooks:h_player_join"
+      ],
+      "javaClass": "StarterWreck",
+      "testedBy": "t_wreck"
     }
   ]
 }

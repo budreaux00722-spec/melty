@@ -107,9 +107,9 @@ w(f"{D}/dimension_type/planet.json", {"ultrawarm": False, "natural": True, "pigl
     "monster_spawn_light_level": {"type": "minecraft:uniform", "min_inclusive": 0, "max_inclusive": 7}, "monster_spawn_block_light_limit": 0})
 
 w(f"{A}/lang/en_us.json", {**lang,
-    "scrapsky.msg.wreck": "Your ship crash-landed nearby. Fix its Broken Thruster: use it with 3 iron ingots and 2 redstone in your inventory. Then use the Driver's Seat to fly.",
+    "scrapsky.msg.wreck": "Your ship crash-landed nearby. Open the salvage crate beside it, then use a Broken Thruster with 3 iron ingots and 2 redstone in your inventory to fix it. Then use the Driver's Seat to fly. All Scrap Sky parts are in your recipe book.",
     "scrapsky.msg.repaired": "Thruster repaired!",
-    "scrapsky.msg.need_parts": "Repairing needs 3 iron ingots and 2 redstone.",
+    "scrapsky.msg.need_parts": "Repairing needs 3 iron ingots and 2 redstone in your inventory (the salvage crate by the wreck has them).",
     "scrapsky.msg.no_thruster": "This ship needs at least one working Thruster.",
     "scrapsky.msg.too_heavy": "Too heavy to lift: mass %s, thrust %s. Add Thrusters or remove blocks.",
     "scrapsky.msg.too_big": "Too many parts (max %s).",
@@ -189,6 +189,13 @@ public final class SheetData {{
 
     public static final List<WreckBlock> WRECK = List.of(
 {",\n".join(wreck_java(r) for r in rows("wreck"))}
+    );
+
+    /** sheet "supplies": one stack in the salvage crate beside the wreck. */
+    public record Supply(String id, String item, int count, int dx, int dy, int dz) {{}}
+
+    public static final List<Supply> SUPPLIES = List.of(
+{",\n".join(f"        new Supply({jstr(r['id'])}, {jstr(r['item'])}, {r['count']}, {r['dx']}, {r['dy']}, {r['dz']})" for r in rows("supplies"))}
     );
 
     public static final int MAX_PLAYERS = {mp["max_players"]};

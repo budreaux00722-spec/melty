@@ -25,7 +25,7 @@ import java.util.stream.Stream;
  */
 public final class ScrapMechanicLibrary {
     /** One resolved part: its name in Scrap Mechanic and a 32x32 block face made from its own texture. */
-    public record Resolved(SheetData.Part part, String uuid, String title, String texturePath, Images.Img face, String how) {}
+    public record Resolved(SheetData.Part part, String uuid, String title, String texturePath, Images.Img face, String how, String diag) {}
 
     private final Path root;
     private final Consumer<String> log;
@@ -110,25 +110,41 @@ public final class ScrapMechanicLibrary {
         if (title == null) title = prettify(MiniJson.str(hit.get("name")));
         String texPath = texture(hit, block);
         Images.Img face = null;
+        String diag;
+        int color = parseColor(MiniJson.str(hit.get("color")), p.fallbackColor());
         if (texPath != null) {
             try {
                 Path f = gamePath(texPath);
-                Images.Img img = Images.decode(f.getFileName().toString(), Files.readAllBytes(f));
-                int color = parseColor(MiniJson.str(hit.get("color")), p.fallbackColor());
+                if (!Files.isRegularFile(f)) throw new IOException("missing " + root.relativize(f));
+                byte[] bytes = Files.readAllBytes(f);
+                Images.Img img = Images.decode(f.getFileName().toString(), bytes);
+                Images.Img crop;
                 if (block) {
                     // one Scrap Mechanic block shows 1/tiling of its tiling texture
                     double tiling = hit.get("tiling") instanceof Double d ? Math.max(1, d) : 4;
                     int cw = (int) Math.max(8, img.w() / tiling), ch = (int) Math.max(8, img.h() / tiling);
-                    face = Images.paint(Images.cropScale(img, 0, 0, cw, ch, 32), color, p.kind() == SheetData.Kind.GLASS);
+                    crop = Images.cropScale(img, 0, 0, cw, ch, 32);
                 } else {
-                    face = Images.paint(Images.cropScale(img, img.w() / 4, img.h() / 4, img.w() / 2, img.h() / 2, 32), color, false);
+                    crop = Images.cropScale(img, img.w() / 4, img.h() / 4, img.w() / 2, img.h() / 2, 32);
                 }
+                double[] st = Images.stats(crop);
+                diag = String.format(java.util.Locale.ROOT, "%s %dx%d %s rgb=%.2f,%.2f,%.2f a=%.2f", f.getFileName(), img.w(), img.h(), describe(bytes), st[0], st[1], st[2], st[3]);
+                if (st[4] < 0.06 && st[3] > 0.08 && st[3] < 0.98) {
+                    crop = Images.alphaAsGrey(crop); // the pattern is in the alpha channel
+                    diag += " (pattern from alpha)";
+                } else if (st[4] < 0.06) {
+                    crop = null; // nothing to show: use the part's own colour
+                    diag += " (too dark: colour only)";
+                }
+                if (crop != null) face = Images.paint(crop, color, p.kind() == SheetData.Kind.GLASS);
             } catch (IOException | RuntimeException e) {
-                log.accept("texture " + texPath + " for " + p.id() + " unreadable (" + e.getMessage() + "); using its colour");
+                diag = texPath + " unreadable: " + e.getMessage() + " (colour only)";
             }
-        }
-        log.accept("Scrap Mechanic " + p.id() + " <- \"" + title + "\" (" + how + (texPath != null ? ", " + texPath : "") + ")");
-        return new Resolved(p, uuid, title, texPath, face, how);
+        } else diag = "no texture (colour only)";
+        if (face == null) face = Images.flat(color, 32);
+        else if (Images.stats(face)[4] < 0.06) { face = Images.flat(color, 32); diag += " (painted too dark: colour only)"; }
+        log.accept("Scrap Mechanic " + p.id() + " <- \"" + title + "\" (" + how + (texPath != null ? ", " + texPath : "") + ") " + diag);
+        return new Resolved(p, uuid, title, texPath, face, how, diag);
     }
 
     private String texture(Map<String, Object> e, boolean block) {
@@ -175,6 +191,15 @@ public final class ScrapMechanicLibrary {
             cur = found;
         }
         return cur;
+    }
+
+    private static String describe(byte[] b) {
+        if (b.length > 4 && b[0] == 'D' && b[1] == 'D' && b[2] == 'S') {
+            String cc = new String(b, 84, 4, java.nio.charset.StandardCharsets.US_ASCII);
+            return "DDS " + (cc.equals("DX10") ? "DXGI" + (b[128] & 0xff) : cc.trim());
+        }
+        if (b.length > 18) return "TGA type " + (b[2] & 0xff) + " " + (b[16] & 0xff) + "bit desc " + (b[17] & 0xff);
+        return "?";
     }
 
     private static int parseColor(String hex, int fallback) {

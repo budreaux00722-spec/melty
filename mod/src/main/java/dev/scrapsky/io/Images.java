@@ -19,8 +19,10 @@ public final class Images {
 
     public static Img decode(String name, byte[] d) throws IOException {
         String n = name.toLowerCase(java.util.Locale.ROOT);
+        // trust the contents over the extension
+        if (d.length > 4 && d[0] == 'D' && d[1] == 'D' && d[2] == 'S' && d[3] == ' ') return dds(d);
+        if (d.length > 8 && (d[0] & 0xff) == 0x89 && d[1] == 'P' && d[2] == 'N' && d[3] == 'G') n = "x.png";
         if (n.endsWith(".tga")) return tga(d);
-        if (n.endsWith(".dds")) return dds(d);
         BufferedImage bi = ImageIO.read(new ByteArrayInputStream(d));
         if (bi == null) throw new IOException("unreadable image " + name);
         int[] px = bi.getRGB(0, 0, bi.getWidth(), bi.getHeight(), null, 0, bi.getWidth());
@@ -236,6 +238,33 @@ public final class Images {
     }
 
     private static int clamp(float v) { return Math.max(0, Math.min(255, Math.round(v * 255))); }
+
+    /** Mean red, green, blue, alpha (0..1) and luminance of an image. */
+    public static double[] stats(Img img) {
+        double r = 0, g = 0, b = 0, a = 0;
+        for (int c : img.argb()) { a += (c >>> 24) / 255.0; r += ((c >> 16) & 255) / 255.0; g += ((c >> 8) & 255) / 255.0; b += (c & 255) / 255.0; }
+        int n = Math.max(1, img.argb().length);
+        r /= n; g /= n; b /= n; a /= n;
+        return new double[]{r, g, b, a, 0.299 * r + 0.587 * g + 0.114 * b};
+    }
+
+    /** When a texture's colour is black but its alpha carries the pattern, use the alpha as the brightness. */
+    public static Img alphaAsGrey(Img src) {
+        int[] out = new int[src.argb().length];
+        for (int i = 0; i < out.length; i++) { int a = src.argb()[i] >>> 24; out[i] = 0xff000000 | a << 16 | a << 8 | a; }
+        return new Img(src.w(), src.h(), out);
+    }
+
+    /** A flat face in one colour with a light grain, for a part whose own texture can't be shown. */
+    public static Img flat(int rgb, int size) {
+        int[] out = new int[size * size];
+        java.util.Random rnd = new java.util.Random(rgb);
+        for (int i = 0; i < out.length; i++) {
+            float k = 0.9f + rnd.nextFloat() * 0.15f;
+            out[i] = 0xff000000 | Math.min(255, (int) (((rgb >> 16) & 255) * k)) << 16 | Math.min(255, (int) (((rgb >> 8) & 255) * k)) << 8 | Math.min(255, (int) ((rgb & 255) * k));
+        }
+        return new Img(size, size, out);
+    }
 
     public static byte[] png(Img img) throws IOException {
         BufferedImage bi = new BufferedImage(img.w(), img.h(), BufferedImage.TYPE_INT_ARGB);

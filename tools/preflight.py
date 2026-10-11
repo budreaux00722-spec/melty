@@ -58,6 +58,7 @@ def main():
             if "testedBy" in r: ref(name, rid, "testedBy", "tests", r["testedBy"])
             if name == "recipes": ref(name, rid, "result", "parts", r["result"])
             if name == "wreck": ref(name, rid, "part", "parts", r["part"])
+            if name == "supplies" and r["item"].startswith("scrapsky:"): ref(name, rid, "item", "parts", r["item"].split(":")[1])
             jc = r.get("javaClass") or r.get("readerClass")
             if jc and jc != "-" and jc not in java_classes:
                 problems.append(f"{name}:{rid} names class {jc}, which is not in mod/src yet")

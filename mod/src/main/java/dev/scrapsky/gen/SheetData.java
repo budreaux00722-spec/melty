@@ -91,6 +91,16 @@ public final class SheetData {
         new WreckBlock("debris_3", "hull_glass", -3, 0, -4, "-")
     );
 
+    /** sheet "supplies": one stack in the salvage crate beside the wreck. */
+    public record Supply(String id, String item, int count, int dx, int dy, int dz) {}
+
+    public static final List<Supply> SUPPLIES = List.of(
+        new Supply("crate_iron", "minecraft:iron_ingot", 3, -3, 0, 1),
+        new Supply("crate_redstone", "minecraft:redstone", 2, -3, 0, 1),
+        new Supply("crate_wood", "scrapsky:hull_wood", 16, -3, 0, 1),
+        new Supply("crate_glass", "scrapsky:hull_glass", 4, -3, 0, 1)
+    );
+
     public static final int MAX_PLAYERS = 4;
 
     public static Part part(String id) {
