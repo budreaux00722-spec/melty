@@ -12,3 +12,5 @@ dist/
 *.mbin
 *.MBIN
 dist/
+mod/run2/
+mod/run-selftest/
