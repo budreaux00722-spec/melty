@@ -26,7 +26,7 @@ public final class SheetData {
         new Part("hull_glass", Kind.GLASS, new String[]{"5f41af56-df4c-4837-9b3c-10781335757f"}, "blk_glass_dif", "glass", "Glass Block", 0xe4f8ff, 0.5f, "glass", 1, 0, true),
         new Part("hull_bricks", Kind.HULL, new String[]{"0603b36e-0bdb-4828-b90c-ff19abcdfe34"}, "blk_bricks0?1_dif", "brick", "Brick Block", 0xaf967b, 2.0f, "stone", 4, 0, false),
         new Part("hull_caution", Kind.HULL, new String[]{"09ca2713-28ee-4119-9622-e85490034758"}, "blk_caution0?1_dif", "caution", "Caution Block", 0xce9e0c, 1.5f, "stone", 2, 0, true),
-        new Part("thruster", Kind.THRUSTER, new String[]{"5e96037a-a338-490a-a76f-6b4d820f8e46"}, "thruster", "thruster", "Thruster", 0xc25b2a, 3.0f, "metal", 2, 14, true),
+        new Part("thruster", Kind.THRUSTER, new String[]{"5e96037a-a338-490a-a76f-6b4d820f8e46"}, "thruster", "thruster", "Thruster", 0xc25b2a, 3.0f, "metal", 2, 60, true),
         new Part("thruster_broken", Kind.BROKEN_THRUSTER, new String[]{"5e96037a-a338-490a-a76f-6b4d820f8e46"}, "thruster", "thruster", "Broken Thruster", 0x5a4a40, 3.0f, "metal", 2, 0, true),
         new Part("driver_seat", Kind.SEAT, new String[]{"cf3fdcfc-a7e5-4497-b000-ffda67dd8db7"}, "driverseat", "driverseat", "Driver's Seat", 0x3c5f8a, 2.0f, "metal", 2, 0, true)
     );
@@ -47,6 +47,48 @@ public final class SheetData {
         new NmsRow("d_toxic", "loc_english", "-", "(?i)(^|_)(TOXIC|CAUSTIC|NOXIOUS|POISON|POISONOUS)(_|$)", "^[A-Za-z' -]{4,32}$", "Toxic"),
         new NmsRow("d_weather", "loc_english", "-", "(?i)(^|_)WEATHER(_|$)", "^[A-Za-z' -]{4,32}$", "-"),
         new NmsRow("planet_music", "(?i).*audio.*\\.pak", "(?i).*\\.wem$", "-", "Wwise Vorbis WEM, at least 60 seconds long", "planets play Minecraft's own music")
+    );
+
+    /** sheet "wreck": one block of the crash-landed starter ship. */
+    public record WreckBlock(String id, String part, int dx, int dy, int dz, String facing) {}
+
+    public static final List<WreckBlock> WRECK = List.of(
+        new WreckBlock("floor_0_0", "hull_wood", -1, 0, -2, "-"),
+        new WreckBlock("floor_0_1", "hull_wood", -1, 0, -1, "-"),
+        new WreckBlock("floor_0_2", "hull_wood", -1, 0, 0, "-"),
+        new WreckBlock("floor_0_3", "hull_wood", -1, 0, 1, "-"),
+        new WreckBlock("floor_0_4", "hull_wood", -1, 0, 2, "-"),
+        new WreckBlock("floor_1_0", "hull_wood", 0, 0, -2, "-"),
+        new WreckBlock("floor_1_1", "hull_wood", 0, 0, -1, "-"),
+        new WreckBlock("floor_1_2", "hull_wood", 0, 0, 0, "-"),
+        new WreckBlock("floor_1_3", "hull_wood", 0, 0, 1, "-"),
+        new WreckBlock("floor_1_4", "hull_wood", 0, 0, 2, "-"),
+        new WreckBlock("floor_2_0", "hull_wood", 1, 0, -2, "-"),
+        new WreckBlock("floor_2_1", "hull_wood", 1, 0, -1, "-"),
+        new WreckBlock("floor_2_2", "hull_wood", 1, 0, 0, "-"),
+        new WreckBlock("floor_2_3", "hull_wood", 1, 0, 1, "-"),
+        new WreckBlock("floor_2_4", "hull_wood", 1, 0, 2, "-"),
+        new WreckBlock("trim_w_0", "hull_caution", -2, 0, -2, "-"),
+        new WreckBlock("trim_e_0", "hull_caution", 2, 0, -2, "-"),
+        new WreckBlock("trim_w_1", "hull_caution", -2, 0, -1, "-"),
+        new WreckBlock("trim_e_1", "hull_caution", 2, 0, -1, "-"),
+        new WreckBlock("trim_w_2", "hull_caution", -2, 0, 0, "-"),
+        new WreckBlock("trim_e_2", "hull_caution", 2, 0, 0, "-"),
+        new WreckBlock("trim_w_3", "hull_caution", -2, 0, 1, "-"),
+        new WreckBlock("trim_e_3", "hull_caution", 2, 0, 1, "-"),
+        new WreckBlock("trim_w_4", "hull_caution", -2, 0, 2, "-"),
+        new WreckBlock("trim_e_4", "hull_caution", 2, 0, 2, "-"),
+        new WreckBlock("seat", "driver_seat", 0, 1, 0, "north"),
+        new WreckBlock("canopy_front", "hull_glass", 0, 1, -2, "-"),
+        new WreckBlock("canopy_fl", "hull_glass", -1, 1, -2, "-"),
+        new WreckBlock("canopy_fr", "hull_glass", 1, 1, -2, "-"),
+        new WreckBlock("canopy_top", "hull_glass", 0, 2, -1, "-"),
+        new WreckBlock("thruster_l", "thruster_broken", -1, 1, 2, "south"),
+        new WreckBlock("thruster_r", "thruster_broken", 1, 1, 2, "south"),
+        new WreckBlock("tail", "hull_caution", 0, 1, 2, "-"),
+        new WreckBlock("debris_1", "hull_wood", -4, 0, 3, "-"),
+        new WreckBlock("debris_2", "hull_caution", 4, 0, -3, "-"),
+        new WreckBlock("debris_3", "hull_glass", -3, 0, -4, "-")
     );
 
     public static final int MAX_PLAYERS = 4;

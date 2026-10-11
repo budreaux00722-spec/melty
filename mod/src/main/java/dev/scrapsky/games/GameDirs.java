@@ -19,15 +19,35 @@ import java.util.regex.Pattern;
 public final class GameDirs {
     private GameDirs() {}
 
+    /** Melty writes each player's game folders here before every Play (recipe "settings"). */
+    public static Path settingsFile;
+
     public static Path scrapMechanic(Consumer<String> log) {
-        return find("SCRAPSKY_SM_DIR", "387990", "Scrap Mechanic", p -> Files.isDirectory(p.resolve("Data")), log);
+        return find("SCRAPSKY_SM_DIR", "sm_dir", "387990", "Scrap Mechanic", p -> Files.isDirectory(p.resolve("Data")), log);
     }
 
     public static Path noMansSky(Consumer<String> log) {
-        return find("SCRAPSKY_NMS_DIR", "275850", "No Man's Sky", p -> Files.isDirectory(p.resolve("GAMEDATA")), log);
+        return find("SCRAPSKY_NMS_DIR", "nms_dir", "275850", "No Man's Sky", p -> Files.isDirectory(p.resolve("GAMEDATA")), log);
     }
 
-    private static Path find(String env, String appId, String folder, java.util.function.Predicate<Path> valid, Consumer<String> log) {
+    private static String fromSettings(String key) {
+        if (settingsFile == null || !Files.isRegularFile(settingsFile)) return null;
+        java.util.Properties p = new java.util.Properties();
+        try (var r = Files.newBufferedReader(settingsFile, java.nio.charset.StandardCharsets.UTF_8)) {
+            p.load(new java.io.StringReader(r.lines().map(l -> l.replace("\\", "/")).reduce("", (a, b) -> a + b + "\n")));
+        } catch (IOException e) {
+            return null;
+        }
+        return p.getProperty(key);
+    }
+
+    private static Path find(String env, String key, String appId, String folder, java.util.function.Predicate<Path> valid, Consumer<String> log) {
+        String s = fromSettings(key);
+        if (s != null && !s.isBlank()) {
+            Path p = Path.of(s.trim());
+            if (valid.test(p)) { log.accept(folder + " from Melty settings: " + p); return p; }
+            log.accept("Melty settings name " + p + " for " + folder + ", which doesn't look like it; trying " + env);
+        }
         String v = System.getenv(env);
         if (v == null || v.isBlank()) v = System.getProperty(env.toLowerCase(java.util.Locale.ROOT).replace('_', '.'));
         if (v != null && !v.isBlank()) {

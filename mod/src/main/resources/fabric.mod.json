@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "scrapsky",
+  "version": "${version}",
+  "name": "Scrap Sky",
+  "description": "Build ships in Minecraft from Scrap Mechanic's real parts and fly them to planets with No Man's Sky's own music and names, read from your own copies of both games.",
+  "authors": ["budreaux00722"],
+  "contributors": ["Built with Claude Code"],
+  "contact": {"sources": "https://github.com/budreaux00722-spec/melty"},
+  "license": "MIT",
+  "icon": "assets/scrapsky/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["dev.scrapsky.ScrapSky"],
+    "client": ["dev.scrapsky.client.ScrapSkyClient"]
+  },
+  "mixins": ["scrapsky.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "fabric-api": "*",
+    "minecraft": "~1.21.1",
+    "java": ">=21"
+  },
+  "suggests": {"e4mc": "*"}
+}

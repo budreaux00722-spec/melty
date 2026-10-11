@@ -1,0 +1,10 @@
+{
+  "planet_music": {
+    "sounds": [
+      {
+        "name": "minecraft:music.game",
+        "type": "event"
+      }
+    ]
+  }
+}

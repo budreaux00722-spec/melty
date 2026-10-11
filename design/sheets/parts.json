@@ -1,16 +1,174 @@
 {
   "sheet": "parts",
   "about": "Every Scrap Mechanic part that becomes a Minecraft block. The texture and name are resolved from the player's Scrap Mechanic install: first by uuid, then by texture file name, then by shapeset name. 'fallbackColor' is the mod's own flat placeholder used only if the player's copy cannot be read.",
-  "columns": ["id", "kind", "smUuids", "smTextureMatch", "smNameMatch", "fallbackName", "fallbackColor", "hardness", "sound", "mass", "lift", "recipeRef", "inStarterWreck"],
+  "columns": [
+    "id",
+    "kind",
+    "smUuids",
+    "smTextureMatch",
+    "smNameMatch",
+    "fallbackName",
+    "fallbackColor",
+    "hardness",
+    "sound",
+    "mass",
+    "lift",
+    "recipeRef",
+    "inStarterWreck"
+  ],
   "rows": [
-    {"id": "hull_wood", "kind": "hull", "smUuids": ["df953d9c-234f-4ac2-af5e-f0490b223e71"], "smTextureMatch": "blk_wood0?1_dif", "smNameMatch": "wood", "fallbackName": "Wood Block", "fallbackColor": "9f7956", "hardness": 1.5, "sound": "wood", "mass": 1, "lift": 0, "recipeRef": "r_hull_wood", "inStarterWreck": true},
-    {"id": "hull_metal", "kind": "hull", "smUuids": ["8aedf6c2-94e1-4506-89d4-a0227c552f1e"], "smTextureMatch": "blk_metal0?1_dif", "smNameMatch": "metal", "fallbackName": "Metal Block", "fallbackColor": "7a8186", "hardness": 3.0, "sound": "metal", "mass": 3, "lift": 0, "recipeRef": "r_hull_metal", "inStarterWreck": true},
-    {"id": "hull_concrete", "kind": "hull", "smUuids": ["a6c6ce30-dd47-4587-b475-085d55c6a3b4"], "smTextureMatch": "blk_concrete0?1_dif", "smNameMatch": "concrete", "fallbackName": "Concrete Block", "fallbackColor": "8d8f89", "hardness": 2.5, "sound": "stone", "mass": 4, "lift": 0, "recipeRef": "r_hull_concrete", "inStarterWreck": false},
-    {"id": "hull_glass", "kind": "glass", "smUuids": ["5f41af56-df4c-4837-9b3c-10781335757f"], "smTextureMatch": "blk_glass_dif", "smNameMatch": "glass", "fallbackName": "Glass Block", "fallbackColor": "e4f8ff", "hardness": 0.5, "sound": "glass", "mass": 1, "lift": 0, "recipeRef": "r_hull_glass", "inStarterWreck": true},
-    {"id": "hull_bricks", "kind": "hull", "smUuids": ["0603b36e-0bdb-4828-b90c-ff19abcdfe34"], "smTextureMatch": "blk_bricks0?1_dif", "smNameMatch": "brick", "fallbackName": "Brick Block", "fallbackColor": "af967b", "hardness": 2.0, "sound": "stone", "mass": 4, "lift": 0, "recipeRef": "r_hull_bricks", "inStarterWreck": false},
-    {"id": "hull_caution", "kind": "hull", "smUuids": ["09ca2713-28ee-4119-9622-e85490034758"], "smTextureMatch": "blk_caution0?1_dif", "smNameMatch": "caution", "fallbackName": "Caution Block", "fallbackColor": "ce9e0c", "hardness": 1.5, "sound": "stone", "mass": 2, "lift": 0, "recipeRef": "r_hull_caution", "inStarterWreck": true},
-    {"id": "thruster", "kind": "thruster", "smUuids": ["5e96037a-a338-490a-a76f-6b4d820f8e46"], "smTextureMatch": "thruster", "smNameMatch": "thruster", "fallbackName": "Thruster", "fallbackColor": "c25b2a", "hardness": 3.0, "sound": "metal", "mass": 2, "lift": 14, "recipeRef": "r_thruster", "inStarterWreck": true},
-    {"id": "thruster_broken", "kind": "broken_thruster", "smUuids": ["5e96037a-a338-490a-a76f-6b4d820f8e46"], "smTextureMatch": "thruster", "smNameMatch": "thruster", "fallbackName": "Broken Thruster", "fallbackColor": "5a4a40", "hardness": 3.0, "sound": "metal", "mass": 2, "lift": 0, "recipeRef": "-", "inStarterWreck": true},
-    {"id": "driver_seat", "kind": "seat", "smUuids": ["cf3fdcfc-a7e5-4497-b000-ffda67dd8db7"], "smTextureMatch": "driverseat", "smNameMatch": "driverseat", "fallbackName": "Driver's Seat", "fallbackColor": "3c5f8a", "hardness": 2.0, "sound": "metal", "mass": 2, "lift": 0, "recipeRef": "r_driver_seat", "inStarterWreck": true}
+    {
+      "id": "hull_wood",
+      "kind": "hull",
+      "smUuids": [
+        "df953d9c-234f-4ac2-af5e-f0490b223e71"
+      ],
+      "smTextureMatch": "blk_wood0?1_dif",
+      "smNameMatch": "wood",
+      "fallbackName": "Wood Block",
+      "fallbackColor": "9f7956",
+      "hardness": 1.5,
+      "sound": "wood",
+      "mass": 1,
+      "lift": 0,
+      "recipeRef": "r_hull_wood",
+      "inStarterWreck": true
+    },
+    {
+      "id": "hull_metal",
+      "kind": "hull",
+      "smUuids": [
+        "8aedf6c2-94e1-4506-89d4-a0227c552f1e"
+      ],
+      "smTextureMatch": "blk_metal0?1_dif",
+      "smNameMatch": "metal",
+      "fallbackName": "Metal Block",
+      "fallbackColor": "7a8186",
+      "hardness": 3.0,
+      "sound": "metal",
+      "mass": 3,
+      "lift": 0,
+      "recipeRef": "r_hull_metal",
+      "inStarterWreck": true
+    },
+    {
+      "id": "hull_concrete",
+      "kind": "hull",
+      "smUuids": [
+        "a6c6ce30-dd47-4587-b475-085d55c6a3b4"
+      ],
+      "smTextureMatch": "blk_concrete0?1_dif",
+      "smNameMatch": "concrete",
+      "fallbackName": "Concrete Block",
+      "fallbackColor": "8d8f89",
+      "hardness": 2.5,
+      "sound": "stone",
+      "mass": 4,
+      "lift": 0,
+      "recipeRef": "r_hull_concrete",
+      "inStarterWreck": false
+    },
+    {
+      "id": "hull_glass",
+      "kind": "glass",
+      "smUuids": [
+        "5f41af56-df4c-4837-9b3c-10781335757f"
+      ],
+      "smTextureMatch": "blk_glass_dif",
+      "smNameMatch": "glass",
+      "fallbackName": "Glass Block",
+      "fallbackColor": "e4f8ff",
+      "hardness": 0.5,
+      "sound": "glass",
+      "mass": 1,
+      "lift": 0,
+      "recipeRef": "r_hull_glass",
+      "inStarterWreck": true
+    },
+    {
+      "id": "hull_bricks",
+      "kind": "hull",
+      "smUuids": [
+        "0603b36e-0bdb-4828-b90c-ff19abcdfe34"
+      ],
+      "smTextureMatch": "blk_bricks0?1_dif",
+      "smNameMatch": "brick",
+      "fallbackName": "Brick Block",
+      "fallbackColor": "af967b",
+      "hardness": 2.0,
+      "sound": "stone",
+      "mass": 4,
+      "lift": 0,
+      "recipeRef": "r_hull_bricks",
+      "inStarterWreck": false
+    },
+    {
+      "id": "hull_caution",
+      "kind": "hull",
+      "smUuids": [
+        "09ca2713-28ee-4119-9622-e85490034758"
+      ],
+      "smTextureMatch": "blk_caution0?1_dif",
+      "smNameMatch": "caution",
+      "fallbackName": "Caution Block",
+      "fallbackColor": "ce9e0c",
+      "hardness": 1.5,
+      "sound": "stone",
+      "mass": 2,
+      "lift": 0,
+      "recipeRef": "r_hull_caution",
+      "inStarterWreck": true
+    },
+    {
+      "id": "thruster",
+      "kind": "thruster",
+      "smUuids": [
+        "5e96037a-a338-490a-a76f-6b4d820f8e46"
+      ],
+      "smTextureMatch": "thruster",
+      "smNameMatch": "thruster",
+      "fallbackName": "Thruster",
+      "fallbackColor": "c25b2a",
+      "hardness": 3.0,
+      "sound": "metal",
+      "mass": 2,
+      "lift": 60,
+      "recipeRef": "r_thruster",
+      "inStarterWreck": true
+    },
+    {
+      "id": "thruster_broken",
+      "kind": "broken_thruster",
+      "smUuids": [
+        "5e96037a-a338-490a-a76f-6b4d820f8e46"
+      ],
+      "smTextureMatch": "thruster",
+      "smNameMatch": "thruster",
+      "fallbackName": "Broken Thruster",
+      "fallbackColor": "5a4a40",
+      "hardness": 3.0,
+      "sound": "metal",
+      "mass": 2,
+      "lift": 0,
+      "recipeRef": "-",
+      "inStarterWreck": true
+    },
+    {
+      "id": "driver_seat",
+      "kind": "seat",
+      "smUuids": [
+        "cf3fdcfc-a7e5-4497-b000-ffda67dd8db7"
+      ],
+      "smTextureMatch": "driverseat",
+      "smNameMatch": "driverseat",
+      "fallbackName": "Driver's Seat",
+      "fallbackColor": "3c5f8a",
+      "hardness": 2.0,
+      "sound": "metal",
+      "mass": 2,
+      "lift": 0,
+      "recipeRef": "r_driver_seat",
+      "inStarterWreck": true
+    }
   ]
 }

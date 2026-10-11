@@ -57,6 +57,7 @@ def main():
             if "descriptorRef" in r: ref(name, rid, "descriptorRef", "nms_content", r["descriptorRef"])
             if "testedBy" in r: ref(name, rid, "testedBy", "tests", r["testedBy"])
             if name == "recipes": ref(name, rid, "result", "parts", r["result"])
+            if name == "wreck": ref(name, rid, "part", "parts", r["part"])
             jc = r.get("javaClass") or r.get("readerClass")
             if jc and jc != "-" and jc not in java_classes:
                 problems.append(f"{name}:{rid} names class {jc}, which is not in mod/src yet")

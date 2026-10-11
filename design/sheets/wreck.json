@@ -1,0 +1,302 @@
+{
+  "sheet": "wreck",
+  "about": "The crash-landed starter ship, block by block. Offsets are from the anchor block on the surface 8 blocks east of world spawn; the ship points north (-z). Debris rows are loose parts lying apart from the hull (not connected, so they are not part of the ship until the player attaches them).",
+  "columns": [
+    "id",
+    "part",
+    "dx",
+    "dy",
+    "dz",
+    "facing"
+  ],
+  "rows": [
+    {
+      "id": "floor_0_0",
+      "part": "hull_wood",
+      "dx": -1,
+      "dy": 0,
+      "dz": -2,
+      "facing": "-"
+    },
+    {
+      "id": "floor_0_1",
+      "part": "hull_wood",
+      "dx": -1,
+      "dy": 0,
+      "dz": -1,
+      "facing": "-"
+    },
+    {
+      "id": "floor_0_2",
+      "part": "hull_wood",
+      "dx": -1,
+      "dy": 0,
+      "dz": 0,
+      "facing": "-"
+    },
+    {
+      "id": "floor_0_3",
+      "part": "hull_wood",
+      "dx": -1,
+      "dy": 0,
+      "dz": 1,
+      "facing": "-"
+    },
+    {
+      "id": "floor_0_4",
+      "part": "hull_wood",
+      "dx": -1,
+      "dy": 0,
+      "dz": 2,
+      "facing": "-"
+    },
+    {
+      "id": "floor_1_0",
+      "part": "hull_wood",
+      "dx": 0,
+      "dy": 0,
+      "dz": -2,
+      "facing": "-"
+    },
+    {
+      "id": "floor_1_1",
+      "part": "hull_wood",
+      "dx": 0,
+      "dy": 0,
+      "dz": -1,
+      "facing": "-"
+    },
+    {
+      "id": "floor_1_2",
+      "part": "hull_wood",
+      "dx": 0,
+      "dy": 0,
+      "dz": 0,
+      "facing": "-"
+    },
+    {
+      "id": "floor_1_3",
+      "part": "hull_wood",
+      "dx": 0,
+      "dy": 0,
+      "dz": 1,
+      "facing": "-"
+    },
+    {
+      "id": "floor_1_4",
+      "part": "hull_wood",
+      "dx": 0,
+      "dy": 0,
+      "dz": 2,
+      "facing": "-"
+    },
+    {
+      "id": "floor_2_0",
+      "part": "hull_wood",
+      "dx": 1,
+      "dy": 0,
+      "dz": -2,
+      "facing": "-"
+    },
+    {
+      "id": "floor_2_1",
+      "part": "hull_wood",
+      "dx": 1,
+      "dy": 0,
+      "dz": -1,
+      "facing": "-"
+    },
+    {
+      "id": "floor_2_2",
+      "part": "hull_wood",
+      "dx": 1,
+      "dy": 0,
+      "dz": 0,
+      "facing": "-"
+    },
+    {
+      "id": "floor_2_3",
+      "part": "hull_wood",
+      "dx": 1,
+      "dy": 0,
+      "dz": 1,
+      "facing": "-"
+    },
+    {
+      "id": "floor_2_4",
+      "part": "hull_wood",
+      "dx": 1,
+      "dy": 0,
+      "dz": 2,
+      "facing": "-"
+    },
+    {
+      "id": "trim_w_0",
+      "part": "hull_caution",
+      "dx": -2,
+      "dy": 0,
+      "dz": -2,
+      "facing": "-"
+    },
+    {
+      "id": "trim_e_0",
+      "part": "hull_caution",
+      "dx": 2,
+      "dy": 0,
+      "dz": -2,
+      "facing": "-"
+    },
+    {
+      "id": "trim_w_1",
+      "part": "hull_caution",
+      "dx": -2,
+      "dy": 0,
+      "dz": -1,
+      "facing": "-"
+    },
+    {
+      "id": "trim_e_1",
+      "part": "hull_caution",
+      "dx": 2,
+      "dy": 0,
+      "dz": -1,
+      "facing": "-"
+    },
+    {
+      "id": "trim_w_2",
+      "part": "hull_caution",
+      "dx": -2,
+      "dy": 0,
+      "dz": 0,
+      "facing": "-"
+    },
+    {
+      "id": "trim_e_2",
+      "part": "hull_caution",
+      "dx": 2,
+      "dy": 0,
+      "dz": 0,
+      "facing": "-"
+    },
+    {
+      "id": "trim_w_3",
+      "part": "hull_caution",
+      "dx": -2,
+      "dy": 0,
+      "dz": 1,
+      "facing": "-"
+    },
+    {
+      "id": "trim_e_3",
+      "part": "hull_caution",
+      "dx": 2,
+      "dy": 0,
+      "dz": 1,
+      "facing": "-"
+    },
+    {
+      "id": "trim_w_4",
+      "part": "hull_caution",
+      "dx": -2,
+      "dy": 0,
+      "dz": 2,
+      "facing": "-"
+    },
+    {
+      "id": "trim_e_4",
+      "part": "hull_caution",
+      "dx": 2,
+      "dy": 0,
+      "dz": 2,
+      "facing": "-"
+    },
+    {
+      "id": "seat",
+      "part": "driver_seat",
+      "dx": 0,
+      "dy": 1,
+      "dz": 0,
+      "facing": "north"
+    },
+    {
+      "id": "canopy_front",
+      "part": "hull_glass",
+      "dx": 0,
+      "dy": 1,
+      "dz": -2,
+      "facing": "-"
+    },
+    {
+      "id": "canopy_fl",
+      "part": "hull_glass",
+      "dx": -1,
+      "dy": 1,
+      "dz": -2,
+      "facing": "-"
+    },
+    {
+      "id": "canopy_fr",
+      "part": "hull_glass",
+      "dx": 1,
+      "dy": 1,
+      "dz": -2,
+      "facing": "-"
+    },
+    {
+      "id": "canopy_top",
+      "part": "hull_glass",
+      "dx": 0,
+      "dy": 2,
+      "dz": -1,
+      "facing": "-"
+    },
+    {
+      "id": "thruster_l",
+      "part": "thruster_broken",
+      "dx": -1,
+      "dy": 1,
+      "dz": 2,
+      "facing": "south"
+    },
+    {
+      "id": "thruster_r",
+      "part": "thruster_broken",
+      "dx": 1,
+      "dy": 1,
+      "dz": 2,
+      "facing": "south"
+    },
+    {
+      "id": "tail",
+      "part": "hull_caution",
+      "dx": 0,
+      "dy": 1,
+      "dz": 2,
+      "facing": "-"
+    },
+    {
+      "id": "debris_1",
+      "part": "hull_wood",
+      "dx": -4,
+      "dy": 0,
+      "dz": 3,
+      "facing": "-"
+    },
+    {
+      "id": "debris_2",
+      "part": "hull_caution",
+      "dx": 4,
+      "dy": 0,
+      "dz": -3,
+      "facing": "-"
+    },
+    {
+      "id": "debris_3",
+      "part": "hull_glass",
+      "dx": -3,
+      "dy": 0,
+      "dz": -4,
+      "facing": "-"
+    }
+  ]
+}

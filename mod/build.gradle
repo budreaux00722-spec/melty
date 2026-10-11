@@ -1,0 +1,60 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}"
+    id 'java'
+}
+
+version = project.mod_version
+group = project.maven_group
+base { archivesName = project.archives_base_name }
+
+repositories {
+    mavenCentral()
+}
+
+loom {
+    mixin { defaultRefmapName = 'scrapsky.refmap.json' }
+    runs {
+        // headless self-test on a dedicated server: ./gradlew runSelfTest
+        selfTest {
+            server()
+            name 'Self test (server)'
+            vmArg '-Dscrapsky.selftest=true'
+            vmArg '-Dscrapsky.selftest.exit=true'
+            runDir 'run-selftest'
+            programArg '--nogui'
+        }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    // pure-Java zstd for No Man's Sky's archives (Apache-2.0), shipped inside the mod jar
+    implementation include('io.airlift:aircompressor:0.27')
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') { expand 'version': project.version }
+}
+
+tasks.withType(JavaCompile).configureEach { it.options.release = 21 }
+
+java {
+    toolchain { languageVersion = JavaLanguageVersion.of(21) }
+}
+
+jar {
+    from('../LICENSE') { rename { "LICENSE_scrapsky" } }
+    from('../CREDITS.md')
+}
+
+// plain-Java tests of the game-file readers (no Minecraft needed)
+tasks.register('readerTests', JavaExec) {
+    dependsOn compileTestJava
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.scrapsky.io.ReadersTest'
+    args project.findProperty('readerArgs')?.toString()?.split(' ') ?: []
+}
