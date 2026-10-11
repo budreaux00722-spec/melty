@@ -1,0 +1,9 @@
+{
+    "components": [
+        {"cachedName": "LWJGL 3", "cachedVolatile": true, "dependencyOnly": true, "uid": "org.lwjgl3", "version": "@LWJGL@"},
+        {"cachedName": "Minecraft", "important": true, "uid": "net.minecraft", "version": "@MC@"},
+        {"cachedName": "Intermediary Mappings", "cachedVolatile": true, "dependencyOnly": true, "uid": "net.fabricmc.intermediary", "version": "@MC@"},
+        {"cachedName": "Fabric Loader", "uid": "net.fabricmc.fabric-loader", "version": "@LOADER@"}
+    ],
+    "formatVersion": 1
+}
